@@ -93,9 +93,47 @@ evaluation_llm/
   run_eval_answer.py        # answer task variant
   score_kt.py               # AUC / Accuracy / Brier + per-label/source/objective
   score_answer.py           # top-1 accuracy + random / always-correct baselines
+  llm_as_judge_eval_per_module.py  # activity attribution (LLM-as-judge), standalone
+  run_judge_eval.sh         # launches the paper's activity-attribution runs
   requirements.txt
   README.md
 ```
+
+## Activity attribution (LLM-as-judge)
+
+`llm_as_judge_eval_per_module.py` is a separate, standalone experiment: for
+each module, the model sees every objective and activity (pedagogical
+intents plus example exercises) and must say which activity a real exercise
+from the dataset belongs to. Each exercise is judged `--n-judge-trials`
+times with re-sampled examples and the verdicts are combined by majority.
+
+The runs reported in the paper (Q3: Gemma-4-31B on all exercises, GPT-5 and
+GPT-5.5 on the same 10% per activity, chance baseline) are launched by
+`run_judge_eval.sh`, which reads `OPENROUTER_API_KEY` from a `.env` file at the
+repo root and finds MIAAM-V2 in the Hugging Face cache (or `$MIAAM_DATASET`):
+
+```bash
+bash evaluation_llm/run_judge_eval.sh --dry-run    # print the commands first
+bash evaluation_llm/run_judge_eval.sh              # skips complete runs, resumes partial ones
+```
+
+Single runs, directly:
+
+```bash
+export OPENROUTER_API_KEY=sk-or-v1-...
+DATASET="$(hf download GAIMHE/MIAAM-V2 --repo-type dataset)"
+python llm_as_judge_eval_per_module.py --dataset "$DATASET" \
+    --model openai/gpt-5 --n-samples-per-activity 0 --n-judge-trials 3 --seed 1
+python llm_as_judge_eval_per_module.py --dataset "$DATASET" \
+    --chance-baseline --n-samples-per-activity 0 --seed 1   # no API calls
+```
+
+Results go to `results/llm_as_judge_eval/[MIAAM_V2/]llm_as_judge_quality_per-module-<model>.json`,
+checkpointed after every chunk: re-running the same command resumes, and
+`--force-restart` starts over. Keep `--seed` identical across models so the
+test sets and in-prompt examples are paired. `overall_accuracy` in the JSON
+excludes `None` verdicts (abstentions, ties); to count them as errors,
+recompute from `predicted_activities` vs `ground_truth_activities`.
 
 ## Known sharp edges
 
@@ -106,7 +144,3 @@ evaluation_llm/
   some Qwen3 providers silently ignore `enable_thinking=false`. If you get
   > 50% non-parseable responses on a reasoning model, bump `MAX_TOKENS` to
   4096+ so the answer survives.
-- **Asset coverage.** `descriptions.json` has 7,118 entries and the
-  `compressed/` screenshot tree has 7,118 PNGs, but `interactions_test`
-  references ~6,948 distinct exercises after filtering. `build_windows*.py`
-  logs dropped windows when assets are missing.

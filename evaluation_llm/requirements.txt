@@ -7,3 +7,6 @@ polars>=1.0       # build_windows / run_eval / score parquet I/O
 openai>=1.40      # AsyncOpenAI client against the OpenRouter endpoint
 scikit-learn>=1.3 # AUC, Brier in score_kt.py
 pillow>=10        # image decoding before base64 encoding for vision modality
+pandas>=2.0      # llm_as_judge_eval_per_module.py
+pyarrow>=14      # parquet reads in pandas
+numpy>=1.26      # llm_as_judge_eval_per_module.py (seeded sampling)
