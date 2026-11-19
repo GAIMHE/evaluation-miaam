@@ -85,6 +85,4 @@ The evaluation scripts in this repository are released under the [MIT License](h
 
 Running these scripts requires access to the [MIAAM dataset on Hugging Face](https://huggingface.co/datasets/GAIMHE/MIAAM-V2).
 
-The experiments use [V2.0](https://huggingface.co/datasets/GAIMHE/MIAAM-V2/tree/v2.0), originally released under [CC-BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
-
-The current release specifies the [MIAAM Research Data Licence](https://huggingface.co/datasets/GAIMHE/MIAAM-V2/blob/main/LICENSE). Dataset usage is governed by the applicable terms for the version obtained.
+The current release use the [MIAAM Research Data Licence](https://huggingface.co/datasets/GAIMHE/MIAAM-V2/blob/main/LICENSE). Dataset usage is governed by the applicable terms for the version obtained.
