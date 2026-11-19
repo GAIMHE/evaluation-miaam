@@ -1,6 +1,10 @@
-# MIAAM V1.0 evaluations
+# MIAAM V2.0 evaluations
 
-Knowledge Tracing experiments on the MIAAM/NeurIPS dataset using [pyKT](https://github.com/pykt-team/pykt-toolkit). The dataset is available on Hugging Face at [`GAIMHE/Neurips`](https://huggingface.co/datasets/GAIMHE/Neurips).
+Knowledge Tracing experiments on the MIAAM dataset using [pyKT](https://github.com/pykt-team/pykt-toolkit).
+
+The experiments reported in the paper use [MIAAM V2.0](https://huggingface.co/datasets/GAIMHE/MIAAM-V2/tree/v2.0). Use this version to reproduce the reported results.
+
+The current dataset release is [MIAAM V2.1](https://huggingface.co/datasets/GAIMHE/MIAAM-V2). It includes subsequent deduplication and filtering updates and therefore differs from the data used in these experiments.
 
 ## PyKT
 
@@ -79,7 +83,8 @@ jupyter notebook notebooks/run_eval_openrouter.ipynb
 
 The evaluation scripts in this repository are released under the [MIT License](https://opensource.org/licenses/MIT).
 
-Note that running these scripts requires access to the MIAAM dataset, 
-which is released under [CC-BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 
-and hosted on [Hugging Face](https://huggingface.co/datasets/GAIMHE/MIAAM). 
-Usage of the dataset is subject to its own licensing terms.
+Running these scripts requires access to the [MIAAM dataset on Hugging Face](https://huggingface.co/datasets/GAIMHE/MIAAM-V2).
+
+The experiments use [V2.0](https://huggingface.co/datasets/GAIMHE/MIAAM-V2/tree/v2.0), originally released under [CC-BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+
+The current release specifies the [MIAAM Research Data Licence](https://huggingface.co/datasets/GAIMHE/MIAAM-V2/blob/main/LICENSE). Dataset usage is governed by the applicable terms for the version obtained.
