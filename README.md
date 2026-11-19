@@ -10,6 +10,10 @@ The current dataset release is [MIAAM V2.1](https://huggingface.co/datasets/GAIM
 
 ### 1. Process the dataset
 
+Install `huggingface_hub` in the notebook's Python environment with `python -m pip install huggingface_hub`, then run `hf auth login` from that environment using an account approved for access to `GAIMHE/MIAAM-V2`.
+
+The notebook downloads the filtered interaction table, exercise metadata, dependency graph, and compressed screenshots from the `v2.0` revision into the Hugging Face cache. It sets `DATASET` to that snapshot directory, so no local `Neurips` folder is needed. Subsequent runs reuse cached files.
+
 Run `notebooks/pykt_processing.ipynb` until *"4) Construct train/test dataset for other baselines"*. The notebook first filters out exercises that have no screenshot in `data/screenshots/compressed/`, so all retained exercises have visual content available. It then produces two files in `miaam_pykt_data`:
 - `data.txt` — student sequences in pyKT's format
 - `gkt_graph_transition.npz` — activity-level adjacency matrix for graph-aware models (e.g. GKT), indexed by `activity_id_int`
